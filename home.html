@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollar General</title>
+<link rel="icon" href="mobile logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+main {
+  margin-left: 100px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+.hero-card {
+  background: #111;
+  border-radius: 20px;
+  padding: 40px 60px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 600px;
+  width: 100%;
+}
+.hero-card:hover { transform: translateY(-5px); }
+.hero-card h2 { margin: 0 0 10px; font-size: 2rem; color: #fff; }
+.hero-card p { margin: 0; font-size: 1rem; color: #aaa; }
+.card-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.small-card {
+  background: #111;
+  border-radius: 15px;
+  padding: 20px;
+  width: 180px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.small-card:hover { transform: translateY(-5px); }
+.small-card h3 { margin: 0 0 10px; font-size: 1.1rem; color: #fff; }
+.small-card p { margin: 0; font-size: 0.9rem; color: #aaa; }
+/* Overlay flash */
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: black;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+a.small-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+#overlay h1 {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+#flash {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: white;
+  opacity: 0;
+}
+/* Music control styles */
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #111;
+  color: #fff;
+  border-radius: 15px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 15px rgba(0,200,255,0.3);
+  cursor: pointer;
+  user-select: none;
+}
+.music-control button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.music-control span {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <h1>FLASH WARNING HAHAHAHAHAHAH</h1>
+  <div id="flash"></div>
+</div>
+
+<!-- Add this inside <main> or body (hidden audio element for flash sound) -->
+<audio id="flashSound" src="fartSlowMo.mp3"></audio>
+
+
+<div class="sidebar">
+  <a href="#"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="#"><i class="fas fa-gamepad"></i><span>Stuff</span></a>
+  <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
+  <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
+</div>
+
+<main id="site">
+  <!-- Audio element -->
+  <audio id="bgm"></audio>
+
+  
+
+  <div class="hero-card">
+    <h2>Welcome to Dollar General BETA</h2>
+    <p>Your one-stop minimalist hub. Explore games, tools, and everything in between. Clean, simple, and sleek.</p>
+  </div>
+
+<div class="card-grid">
+  <a href="games.html" class="small-card">
+    <h3>Games</h3>
+    <p>Play your favorite games with just one click.</p>
+  </a>
+
+  <a href="ee.html" class="small-card">
+    <h3>Profile</h3>
+    <p>Manage your account and customize your experience.</p>
+  </a>
+
+  <a href="ee.html" class="small-card">
+    <h3>Settings</h3>
+    <p>Change themes, sounds, and app preferences.</p>
+  </a>
+
+  <a href="ee.html" class="small-card">
+    <h3>News</h3>
+    <p>Stay up to date with the latest updates and releases.</p>
+  </a>
+</div>
+
+</main>
+
+<!-- Music control -->
+<div class="music-control" id="musicControl">
+  <button id="prev"><i class="fas fa-backward"></i></button>
+  <button id="playPause"><i class="fas fa-play"></i></button>
+  <button id="next"><i class="fas fa-forward"></i></button>
+  <span id="trackName">Loading...</span>
+</div>
+
+<script>
+
+  // Flash overlay
+setTimeout(() => {
+  // Play flash sound
+  const flashSound = document.getElementById('flashSound');
+  flashSound.currentTime = 0;
+  flashSound.play().catch(() => {}); // avoid autoplay errors
+
+  flash.style.opacity = '1';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    site.style.opacity = '1';
+    document.body.style.overflow = 'auto';
+  }, 100);
+}, 900);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const flash = document.getElementById('flash');
+  const overlay = document.getElementById('overlay');
+  const site = document.getElementById('site');
+  const audio = document.getElementById('bgm');
+  const trackName = document.getElementById('trackName');
+  const playPauseBtn = document.getElementById('playPause');
+  const nextBtn = document.getElementById('next');
+  const prevBtn = document.getElementById('prev');
+
+  const playlist = [
+    { src: 'Hipst3r - Wish You Were (RuX Remix) [bbxC7e4TW70].mp3', name: 'Wish You Were (RuX Remix)' },
+    { src: 'song2.mp3', name: 'Another Track' }
+  ];
+  let currentTrack = 0;
+
+  function loadTrack(index) {
+    audio.src = playlist[index].src;
+    trackName.textContent = playlist[index].name;
+  }
+
+  // Initially load track but do NOT play
+  loadTrack(currentTrack);
+
+  // Flash overlay
+  setTimeout(() => {
+    flash.style.opacity = '1';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      site.style.opacity = '1';
+      document.body.style.overflow = 'auto';
+    }, 100);
+  }, 900);
+
+  // Function to play current track
+  function playTrack() {
+    audio.play().catch(() => {});
+    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+  }
+
+  // Play/pause button
+  playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      playTrack();
+    } else {
+      audio.pause();
+      playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+  });
+
+  // Next/prev buttons
+  nextBtn.addEventListener('click', () => {
+    currentTrack = (currentTrack + 1) % playlist.length;
+    loadTrack(currentTrack);
+    playTrack();
+  });
+  prevBtn.addEventListener('click', () => {
+    currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+    loadTrack(currentTrack);
+    playTrack();
+  });
+
+  // Auto next track when ended
+  audio.addEventListener('ended', () => {
+    currentTrack = (currentTrack + 1) % playlist.length;
+    loadTrack(currentTrack);
+    playTrack();
+  });
+
+  // Optional: start playback on first user interaction
+  document.body.addEventListener('click', () => {
+    if (audio.paused) playTrack();
+  }, { once: true });
+});
+</script>
+</body>
+</html>
